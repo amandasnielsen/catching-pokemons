@@ -13,32 +13,49 @@
     <section class="form-wrapper" id="formWrapper">
       <form class="form" id="form">
         <h1>Welcome young pokemon trainer</h1>
-        <h3>Please enter your name</h2>
-        <input id="nick" type="text" placeholder="Trainer nickname" />
-        <input id="age" type="text" placeholder="Trainer age">
-        <p>Are you a boy? Or are you a girl?</p>
-        <label>
-          <input type="radio" name="gender" id="boy">
-          Boy
-        </label>
-        <label>
-          <input type="radio" name="gender" id="girl">
-          Girl
-        </label>
-        <button id="submitBtn">Let's catch some pokemons!</button>
+        <h3>Please enter your name</h3>
+        <div class="form-control">
+          <input
+            id="nick"
+            type="text"
+            name="nick"
+            placeholder="Trainer nickname"
+          />
+        </div>
+        <div class="form-control">
+          <input id="age" type="text" name="age" placeholder="Trainer age" />
+        </div>
+        <div class="form-control">
+          <p>Are you a boy? Or are you a girl?</p>
+          <label>
+            <input type="radio" name="gender" id="boy" />
+            Boy
+          </label>
+          <label>
+            <input type="radio" name="gender" id="girl" />
+            Girl
+          </label>
+        </div>
+        <div class="form-control">
+          <button id="submitBtn" type="submit">
+            Let's catch some pokemons!
+          </button>
+        </div>
+        <div class="error-message">
+          <p></p>
+        </div>
       </form>
     </section>
-    <section id="gameField" class="game-field d-none">
-        <section class="high-score d-none" id="highScore">
-            <h1>Congratulations!</h1>
-            <h3 id="winMsg"></h3>
-            <ol class="highscore-list" id="highscoreList">
-
-            </ol>
-            <button id="playAgainBtn">Play again?</button>
-        </section>
+    <section id="gameField" class="game-field intro-bg">
+      <div id="pokemonContainer"></div>
+      <section class="high-score d-none" id="highScore">
+        <h1>Congratulations!</h1>
+        <h3 id="winMsg"></h3>
+        <ol class="highscore-list" id="highscoreList"></ol>
+        <button id="playAgainBtn">Play again?</button>
+      </section>
     </section>
-    
+
     <!-- Läs in audioelementet från DOMen. För att spela .play(), för att pausa .pause(), för att starta om .load()  -->
     <audio src="./assets/pokemon_vs_trainer.mp3"></audio>
   </body>
