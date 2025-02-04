@@ -69,6 +69,7 @@ function loadPokemons() {
 }
 
 function tryToCatchPokemons() {
+  // Försöker fånga pokemons genom att hovra över dem.
   oGameData.pokemonNumbers.forEach((pokemon) => {
     pokemon.img.addEventListener("mouseover", () => {
       if (pokemon.isCaught) {
@@ -94,7 +95,11 @@ function tryToCatchPokemons() {
           console.log(`Total time: ${totalTime} seconds!`);
 
           //saveHighScore(totalTime); Här kan en "saveHighScore" funktion skapas
-        }
+      }
+
+      if (oGameData.nmbrOfCaughtPokemons === 10) {
+        oGameData.endTimeInMilliseconds();
+        log(oGameData.nmbrOfMilliseconds());
       }
     });
   });
@@ -111,3 +116,27 @@ function movePokemons() {
     pokemon.img.style.transform = `translate(${xValue}px, ${yValue}px)`;
   });
 }
+}
+
+// 10 slumpmässigt utvalda pokemons (av 151 stycken) skall slumpas ut på skärmen
+
+// Användaren startar vid ett formulär och ni skall formulärvalidera följande - klar
+// Tränarens namn måste vara mellan 5 och 10 tecken långt - klar
+// Tränaren måste vara mellan 10 och 15 år gammal - klar
+// Tränaren måste ha bockat i om hen är en pojke eller en flicka - klar
+// Vid lyckad validering skall spelet starta, vid misslyckad validering meddelas användaren om exakt vad som gick snett - klar
+
+// Under tiden spelet pågår skall spelmusik spelas - klar
+
+// 10 slumpmässigt utvalda pokemons (av 151 stycken) skall slumpas ut på skärmen
+
+// Bilderna skall ha en bredd och höjd på 300px.
+
+// Var 3e sekund får varje pokemon en ny position
+
+// När man hovrar över en pokemon så fångas den i en pokeboll
+// När man hovrar över en pokeboll smiter pokemonen (måste vara samma pokemon som fångades)
+// När alla pokemon fångats avslutas spelet
+
+// Om användarens tid tar sig in på topp 10 snabbaste tider sparas hen ner i HighScore-listan i localStorage
+// När HighScore-vyn dyker upp skall användaren kunna starta om spelet genom att återgå till startformuläret

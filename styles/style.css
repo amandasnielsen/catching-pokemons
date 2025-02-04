@@ -1,48 +1,88 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Ser till så att bilderna får korrekt storlek och deras rörelse animeras */
-  /* När ni sätter intervallen efter vilken pokemonen får sin nya position bör den intervallen överensstämma med tiden här. 3s. */
-  img {
-    width: 300px;
-    transition: all 3s linear;
-  }
-  
-  .d-none {
-    display: none;
-  }
-  
-  .intro-bg {
-    background-image: url("../assets/background.png");
-  }
-  
-  .start-bg {
-    background-image: url("../assets/arena-background.png");
-  }
-  
-  .game-field {
-    height: 100vh;
-    background-size: cover;
-  }
-  
-  body {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .form-wrapper {
-    width: 400px;
-    height: 400px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #4e4b5c;
-    opacity: 0.8;
-    color: white;
-  }
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Ser till så att bilderna får korrekt storlek och deras rörelse animeras */
+/* När ni sätter intervallen efter vilken pokemonen får sin nya position bör den intervallen överensstämma med tiden här. 3s. */
+img {
+  width: 300px;
+  transition: all 3s linear;
+}
+
+.d-none {
+  display: none;
+}
+
+.game-field {
+  height: 100vh;
+  background-size: cover;
+}
+
+.intro-bg {
+  background-image: url("../assets/background.png");
+}
+
+.start-bg {
+  background-image: url("../assets/arena-background.png");
+}
+
+.form-wrapper {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4e4b5c;
+  opacity: 0.8;
+  color: white;
+}
+
+.form-wrapper h3 {
+  text-align: center;
+  padding: 15px;
+}
+
+#nick,
+#age {
+  padding: 10px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.form {
+  padding: 20px;
+}
+
+.form-control {
+  width: 100%;
+  margin: 10px 0;
+}
+
+#submitBtn {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin: 10px 0;
+  font-weight: 700;
+}
