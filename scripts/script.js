@@ -1,6 +1,5 @@
 const log = (msg) => console.log(msg);
 
-
 document.addEventListener("DOMContentLoaded", () => {
   oGameData.init();
 });
@@ -27,8 +26,7 @@ document.getElementById("form").addEventListener("submit", (event) => {
     errorMessage.textContent = "Du måste välja om du är en pojke eller flicka";
     return;
   }
-  getRandomPokemons();
-  displayPokemons();
+
   startGame();
 });
 
@@ -42,57 +40,74 @@ function startGame() {
   gameField.classList.remove("intro-bg");
   gameField.classList.add("start-bg");
   // audio.play();
+  loadPokemons();
+  setInterval(movePokemons, 3000);
+  tryToCatchPokemons();
 }
 
-function getRandomPokemons() {
-  const totalPokemons = 151;
-  const numToPick = 10;
-  let chosenNumbers = new Set(); // Skapar en Set för att lagra unika nummer
+function loadPokemons() {
+  // Laddar ner pokemons från mina assets.
+  for (let i = 0; i < 10; i++) {
+    let number = Math.floor(Math.random() * 151) + 1;
+    let pokemonNumber = String(number).padStart(3, "0");
+    let url = `assets/pokemons/${pokemonNumber}.png`;
+    let img = document.createElement("img");
+    let isCaught = false;
+    let xValue = oGameData.getLeftPosition();
+    let yValue = oGameData.getTopPosition();
 
-  while (chosenNumbers.size < numToPick) {
-    // Loopa tills vi har 10 unika nummer
-    let randomNum = Math.floor(Math.random() * totalPokemons) + 1; // Slumpar ett tal mellan 1 och 151
-    chosenNumbers.add(randomNum); // Lägger till numret i Set
+    img.src = url;
+    img.id = number;
+    img.width = 300;
+    img.height = 300;
+    img.style.position = "absolute";
+    img.style.transform = `translate(${xValue}px, ${yValue}px)`;
+
+    oGameData.pokemonNumbers.push({ number, img, isCaught, url }); // Skapat en objekt här av olika properties, samma properties men olika värden. Detta objekt pushas in i arrayen pokemonNumbers.
+    gameField.appendChild(img); // Lägger till img i gameField.
   }
-
-  return Array.from(chosenNumbers); // Omvandlar Set till en array och returnerar den så att bilderna syns
 }
 
-function displayPokemons() {
-  const container = document.getElementById("pokemonContainer");
-  container.innerHTML = ""; // Rensar tidigare bilder
+function tryToCatchPokemons() {
+  oGameData.pokemonNumbers.forEach((pokemon) => {
+    pokemon.img.addEventListener("mouseover", () => {
+      if (pokemon.isCaught) {
+        pokemon.isCaught = false;
+        oGameData.nmbrOfCaughtPokemons--;
+        pokemon.img.src = pokemon.url;
+      } else {
+        pokemon.isCaught = true;
+        oGameData.nmbrOfCaughtPokemons++;
+        pokemon.img.src = `assets/ball.webp`;
 
-  const pokemons = getRandomPokemons();
-  pokemons.forEach((num) => {
-    const formattedNum = num.toString().padStart(3, "0"); //Eftersom alla bilder startar med "001" etc
+        // Timern startas när första är infångad
+        if (oGameData.nmbrOfCaughtPokemons === 1 && !startTime) {
+          startTime = Date.now();
+          console.log("Timer starts!");
+        }
 
-    const img = document.createElement("img");
-    img.src = `assets/pokemons/${formattedNum}.png`; // Så att bildernas namn funkar
-    img.alt = `Pokémon ${formattedNum}`;
+        // När 10 är fångade stoppas timern
+        if (oGameData.nmbrOfCaughtPokemons === 10) {
+          let endTime = Date.now();
+          let totalTime = ((endTime - startTime) / 1000).toFixed(2); //Sekunder visas med två decimaler
 
-    container.appendChild(img);
+          console.log(`Total time: ${totalTime} seconds!`);
+
+          //saveHighScore(totalTime); Här kan en "saveHighScore" funktion skapas
+        }
+      }
+    });
   });
 }
 
-// 10 slumpmässigt utvalda pokemons (av 151 stycken) skall slumpas ut på skärmen
-
-// Användaren startar vid ett formulär och ni skall formulärvalidera följande - klar
-// Tränarens namn måste vara mellan 5 och 10 tecken långt - klar
-// Tränaren måste vara mellan 10 och 15 år gammal - klar
-// Tränaren måste ha bockat i om hen är en pojke eller en flicka - klar
-// Vid lyckad validering skall spelet starta, vid misslyckad validering meddelas användaren om exakt vad som gick snett - klar
-
-// Under tiden spelet pågår skall spelmusik spelas - klar
-
-// 10 slumpmässigt utvalda pokemons (av 151 stycken) skall slumpas ut på skärmen
-
-// Bilderna skall ha en bredd och höjd på 300px.
-
-// Var 3e sekund får varje pokemon en ny position
-
-// När man hovrar över en pokemon så fångas den i en pokeboll
-// När man hovrar över en pokeboll smiter pokemonen (måste vara samma pokemon som fångades)
-// När alla pokemon fångats avslutas spelet
-
-// Om användarens tid tar sig in på topp 10 snabbaste tider sparas hen ner i HighScore-listan i localStorage
-// När HighScore-vyn dyker upp skall användaren kunna starta om spelet genom att återgå till startformuläret
+function movePokemons() {
+  // Flyttar pokemons slumpmässigt på skärmen.
+  if (oGameData.nmbrOfCaughtPokemons === 10) {
+    return;
+  }
+  oGameData.pokemonNumbers.forEach((pokemon) => {
+    let xValue = oGameData.getLeftPosition();
+    let yValue = oGameData.getTopPosition();
+    pokemon.img.style.transform = `translate(${xValue}px, ${yValue}px)`;
+  });
+}
