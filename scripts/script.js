@@ -50,7 +50,7 @@ function loadPokemons() {
   for (let i = 0; i < 10; i++) {
     let number = Math.floor(Math.random() * 151) + 1;
     let pokemonNumber = String(number).padStart(3, "0");
-    let url = `../assets/pokemons/${pokemonNumber}.png`;
+    let url = `assets/pokemons/${pokemonNumber}.png`;
     let img = document.createElement("img");
     let isCaught = false;
     let xValue = oGameData.getLeftPosition();
@@ -79,7 +79,22 @@ function tryToCatchPokemons() {
       } else {
         pokemon.isCaught = true;
         oGameData.nmbrOfCaughtPokemons++;
-        pokemon.img.src = `../assets/ball.webp`;
+        pokemon.img.src = `assets/ball.webp`;
+
+        // Timern startas när första är infångad
+        if (oGameData.nmbrOfCaughtPokemons === 1 && !startTime) {
+          startTime = Date.now();
+          console.log("Timer starts!");
+        }
+
+        // När 10 är fångade stoppas timern
+        if (oGameData.nmbrOfCaughtPokemons === 10) {
+          let endTime = Date.now();
+          let totalTime = ((endTime - startTime) / 1000).toFixed(2); //Sekunder visas med två decimaler
+
+          console.log(`Total time: ${totalTime} seconds!`);
+
+          //saveHighScore(totalTime); Här kan en "saveHighScore" funktion skapas
       }
 
       if (oGameData.nmbrOfCaughtPokemons === 10) {
@@ -100,6 +115,7 @@ function movePokemons() {
     let yValue = oGameData.getTopPosition();
     pokemon.img.style.transform = `translate(${xValue}px, ${yValue}px)`;
   });
+}
 }
 
 // 10 slumpmässigt utvalda pokemons (av 151 stycken) skall slumpas ut på skärmen
