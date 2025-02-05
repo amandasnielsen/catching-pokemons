@@ -148,6 +148,12 @@ function showHighScore() {
   });
 }
 
+document.getElementById("playAgainBtn").addEventListener("click", restartGame);
+
+function restartGame() {
+  location.reload();
+}
+
 // 10 slumpmässigt utvalda pokemons (av 151 stycken) skall slumpas ut på skärmen
 
 // Användaren startar vid ett formulär och ni skall formulärvalidera följande - klar
@@ -170,3 +176,4 @@ function showHighScore() {
 
 // Om användarens tid tar sig in på topp 10 snabbaste tider sparas hen ner i HighScore-listan i localStorage
 // När HighScore-vyn dyker upp skall användaren kunna starta om spelet genom att återgå till startformuläret
+
