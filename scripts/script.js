@@ -31,8 +31,10 @@ document.getElementById("form").addEventListener("submit", (event) => {
 });
 
 // starta spelet efter valideringen har lyckats, dölj formuläret och visa spelet.
+let movePokemonsInterval = setInterval(movePokemons, 3000); // flyttar pokemons var 3e sekund, flyttade ut denna variabel från startgame funktionen för att kunna stoppa intervallet när spelet är över i gameover funktionen.
 
 function startGame() {
+  oGameData.init(); // Nollställer datan i oGameData(spelarens info etc.)
   let gameField = document.querySelector("#gameField");
   let audio = document.querySelector("audio");
 
@@ -41,8 +43,9 @@ function startGame() {
   gameField.classList.add("start-bg");
   // audio.play();
   loadPokemons();
-  setInterval(movePokemons, 3000);
+  movePokemonsInterval;
   tryToCatchPokemons();
+  oGameData.startTimeInMilliseconds(); // Startar tiden
 }
 
 function loadPokemons() {
@@ -67,11 +70,14 @@ function loadPokemons() {
     gameField.appendChild(img); // Lägger till img i gameField.
   }
 }
-
 function tryToCatchPokemons() {
   // Försöker fånga pokemons genom att hovra över dem.
   oGameData.pokemonNumbers.forEach((pokemon) => {
     pokemon.img.addEventListener("mouseover", () => {
+      if (oGameData.nmbrOfCaughtPokemons === 10) {
+        return; // Stop catching pokemons if game is over
+      }
+
       if (pokemon.isCaught) {
         pokemon.isCaught = false;
         oGameData.nmbrOfCaughtPokemons--;
@@ -95,11 +101,13 @@ function tryToCatchPokemons() {
           console.log(`Total time: ${totalTime} seconds!`);
 
           //saveHighScore(totalTime); Här kan en "saveHighScore" funktion skapas
-      }
+        }
 
-      if (oGameData.nmbrOfCaughtPokemons === 10) {
-        oGameData.endTimeInMilliseconds();
-        log(oGameData.nmbrOfMilliseconds());
+        if (oGameData.nmbrOfCaughtPokemons === 10) {
+          oGameData.endTimeInMilliseconds();
+          log(oGameData.nmbrOfMilliseconds());
+          gameOver();
+        }
       }
     });
   });
@@ -108,6 +116,7 @@ function tryToCatchPokemons() {
 function movePokemons() {
   // Flyttar pokemons slumpmässigt på skärmen.
   if (oGameData.nmbrOfCaughtPokemons === 10) {
+    gameOver();
     return;
   }
   oGameData.pokemonNumbers.forEach((pokemon) => {
@@ -116,6 +125,43 @@ function movePokemons() {
     pokemon.img.style.transform = `translate(${xValue}px, ${yValue}px)`;
   });
 }
+
+function gameOver() {
+  clearInterval(movePokemonsInterval);
+  showHighScore();
+  document.querySelector("#high-score").classList.remove("d-none");
+  let gameOverMsg = document.querySelector("#game-over");
+  let milliseconds = oGameData.nmbrOfMilliseconds().toString().slice(0, 5);
+  gameOverMsg.textContent = `Bra jobbat ${oGameData.trainerName}! Du fångade alla pokemons på ${milliseconds} millisekunder!`;
+}
+
+function showHighScore() {
+  let highScoreList = document.querySelector("#highscore-list");
+  let highScore = JSON.parse(localStorage.getItem("highScore")) || [];
+
+  highScore.push({
+    name: oGameData.trainerName,
+    age: oGameData.trainerAge,
+    time: oGameData.nmbrOfMilliseconds(),
+  });
+
+  // Sortera highscore-listan efter tid
+  highScore.sort((a, b) => a.time - b.time);
+
+  // Spara de 10 bästa tiderna
+  highScore = highScore.slice(0, 10);
+
+  // Uppdatera localStorage
+  localStorage.setItem("highScore", JSON.stringify(highScore));
+
+  // Visa highscore-listan
+
+  highScore.forEach((score, index) => {
+    let listItem = document.createElement("li");
+    listItem.classList.add("high-score-list__item");
+    listItem.textContent = `${score.name} - ${score.time} ms`;
+    highScoreList.appendChild(listItem);
+  });
 }
 
 // 10 slumpmässigt utvalda pokemons (av 151 stycken) skall slumpas ut på skärmen
