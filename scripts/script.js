@@ -101,12 +101,13 @@ function tryToCatchPokemons() {
           console.log(`Total time: ${totalTime} seconds!`);
 
           //saveHighScore(totalTime); Här kan en "saveHighScore" funktion skapas
-      }
+        }
 
-      if (oGameData.nmbrOfCaughtPokemons === 10) {
-        oGameData.endTimeInMilliseconds();
-        log(oGameData.nmbrOfMilliseconds());
-        gameOver();
+        if (oGameData.nmbrOfCaughtPokemons === 10) {
+          oGameData.endTimeInMilliseconds();
+          log(oGameData.nmbrOfMilliseconds());
+          gameOver();
+        }
       }
     });
   });
@@ -123,7 +124,6 @@ function movePokemons() {
     let yValue = oGameData.getTopPosition();
     pokemon.img.style.transform = `translate(${xValue}px, ${yValue}px)`;
   });
-}
 }
 
 function gameOver() {
