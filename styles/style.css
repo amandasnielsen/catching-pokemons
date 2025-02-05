@@ -35,7 +35,9 @@ img {
   background-image: url("../assets/arena-background.png");
 }
 
-.form-wrapper {
+.form-wrapper,
+.high-score {
+  z-index: 1;
   width: 400px;
   height: 400px;
   position: absolute;
@@ -62,7 +64,11 @@ img {
 .form {
   padding: 20px;
 }
-
+.high-score-list__item {
+  justify-content: space-between;
+  padding: 5px;
+  list-style-position: inside;
+}
 .form-control {
   width: 100%;
   margin: 10px 0;
