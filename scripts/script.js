@@ -41,7 +41,7 @@ function startGame() {
   document.querySelector("#formWrapper").classList.add("d-none");
   gameField.classList.remove("intro-bg");
   gameField.classList.add("start-bg");
-  // audio.play();
+  //audio.play();
   loadPokemons();
   movePokemonsInterval;
   tryToCatchPokemons();
@@ -86,13 +86,13 @@ function tryToCatchPokemons() {
         pokemon.isCaught = true;
         oGameData.nmbrOfCaughtPokemons++;
         pokemon.img.src = `assets/ball.webp`;
-        }
+      }
 
-        if (oGameData.nmbrOfCaughtPokemons === 10) {
-          oGameData.endTimeInMilliseconds();
-          log(oGameData.nmbrOfMilliseconds());
-          gameOver();
-        }
+      if (oGameData.nmbrOfCaughtPokemons === 10) {
+        oGameData.endTimeInMilliseconds();
+        log(oGameData.nmbrOfMilliseconds());
+        gameOver();
+      }
     });
   });
 }
@@ -176,4 +176,3 @@ function restartGame() {
 
 // Om användarens tid tar sig in på topp 10 snabbaste tider sparas hen ner i HighScore-listan i localStorage
 // När HighScore-vyn dyker upp skall användaren kunna starta om spelet genom att återgå till startformuläret
-
