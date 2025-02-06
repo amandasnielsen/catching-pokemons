@@ -1,13 +1,169 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
 
 /* Ser till så att bilderna får korrekt storlek och deras rörelse animeras */
 /* När ni sätter intervallen efter vilken pokemonen får sin nya position bör den intervallen överensstämma med tiden här. 3s. */
 img {
-    width: 300px;
-    transition: all 3s linear;
+  width: 300px;
+  transition: all 3s linear;
 }
 
+.d-none {
+  display: none;
+}
+
+.game-field {
+  height: 100vh;
+  background-size: cover;
+}
+
+.intro-bg {
+  background-image: url("../assets/background.png");
+}
+
+.start-bg {
+  background-image: url("../assets/arena-background.png");
+}
+
+.form-wrapper,
+.high-score {
+  z-index: 1;
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4e4b5c;
+  opacity: 0.8;
+  color: white;
+}
+
+.form-wrapper h3 {
+  text-align: center;
+  padding: 15px;
+}
+
+#nick,
+#age {
+  padding: 10px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.form {
+  padding: 20px;
+}
+.high-score-list__item {
+  justify-content: space-between;
+  padding: 5px;
+}
+.form-control {
+  width: 100%;
+  margin: 10px 0;
+}
+
+#submitBtn {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin: 10px 0;
+  font-weight: 700;
+}
+
+.high-score {
+  z-index: 1;
+  width: 400px;
+  height: auto;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(145deg, #f44336, #ffffff);
+  color: black;
+  opacity: 0.9;
+  border-radius: 15px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.high-score h1 {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.high-score h3 {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.highscore-list {
+  padding: 0;
+  max-height: auto;
+}
+
+.high-score-list__item {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  padding: 8px 15px;
+  margin: 5px 0;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  font-family: "Roboto", sans-serif;
+  color: #333;
+  font-weight: bold;
+  transition: transform 0.2s;
+  list-style-position: inside;
+}
+
+.high-score-list__item:hover {
+  transform: scale(1.05);
+}
+
+.high-score-list__item::before {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+#playAgainBtn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: #ffcc00;
+  color: black;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+#playAgainBtn:hover {
+  background: #ffc700;
+}
