@@ -66,6 +66,10 @@ function tryToCatchPokemons() {
   // Försöker fånga pokemons genom att hovra över dem.
   oGameData.pokemonNumbers.forEach((pokemon) => {
     pokemon.img.addEventListener("mouseover", () => {
+      if (oGameData.nmbrOfCaughtPokemons === 10) {
+        // Försökt att undvika samma if statement som nedan men med olika buggar som resultat. Hjälp?
+        return;
+      }
       if (pokemon.isCaught) {
         pokemon.isCaught = false;
         oGameData.nmbrOfCaughtPokemons--;
